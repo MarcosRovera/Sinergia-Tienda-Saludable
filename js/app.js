@@ -13,7 +13,7 @@ const paginas = [
 ]
 const productos = [
     {nombre: "Creatina ENA Naranja", precio: "$30.000", imagen: "productos/creatina ENA naranja.WebP", descripcion: "Creatina micronizada sabor naranja"},
-    {nombre: "Proteína Whey ENA Chocolate", precio: "$53.000", imagen: "productos/whey ENA chocolate.WebP", descripcion: "Proteína de suero de leche con sabor a chocolate"},
+    {nombre: "Proteína Whey ENA Chocolate", precio: "$53.000", imagen: "productos/whey ENA chocolate.WebP", descripcion: "Proteína WHEY con sabor a chocolate"},
     {nombre: "Creatina ENA Neutra", precio: "$30.000", imagen: "productos/creatina ENA neutra.WebP", descripcion: "Creatina micronizada sin sabor"},
 ]
 console.log(productos);
