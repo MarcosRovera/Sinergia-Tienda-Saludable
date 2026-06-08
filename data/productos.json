@@ -1,0 +1,30 @@
+[
+    {
+        "nombre": "Creatina ENA Naranja",
+        "descripcion": "Creatina micronizada sabor naranja",
+        "precio": "$30000",
+        "imagen": "../productos/Suplementos/creatina ENA naranja.WebP",
+        "categoria": "Suplementos"
+    },
+    {
+        "nombre": "Creatina ENA Neutra",
+        "descripcion": "Creatina micronizada sabor neutro",
+        "precio": "$30000",
+        "imagen": "../productos/Suplementos/creatina ENA neutra.WebP",
+        "categoria": "Suplementos"
+    },
+    {
+        "nombre": "Whey ENA Chocolate",
+        "descripcion": "Proteína whey sabor chocolate",
+        "precio": "$53000",
+        "imagen": "../productos/Suplementos/whey ENA chocolate.WebP",
+        "categoria": "Suplementos"
+    },
+    {
+        "nombre": "Pasta de mani Entrenuts",
+        "descripcion": "Pasta de mani 100% natural sin azúcar",
+        "precio": "$3700",
+        "imagen": "../productos/SinTacc/pasta mani entrenuts.WebP",
+        "categoria": "sintacc"
+    }
+]

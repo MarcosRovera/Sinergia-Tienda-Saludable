@@ -12,18 +12,12 @@ Sinergia es una aplicación web de ecommerce enfocada en la venta de productos s
 - Categorías de productos
 - Footer con información de contacto
 
-##  Tecnologías utilizadas
-- HTML5
-- CSS3
-- Deploy en Vercel
-
 ## 📂 Estructura del proyecto
 - index.html
-- login.html
-- register.html
-- snacks.html
-- Sin_Tacc.html
-- suplementos.html
+- pages
+- produtos
+- data/productos.json
+- js/app.js
 - /css/style.css
 - logo.png
 
