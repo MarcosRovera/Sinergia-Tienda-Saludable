@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "nombre": "Creatina ENA Naranja",
         "descripcion": "Creatina micronizada sabor naranja",
         "precio": "$30000",
@@ -7,6 +8,7 @@
         "categoria": "Suplementos"
     },
     {
+        "id": 2,
         "nombre": "Creatina ENA Neutra",
         "descripcion": "Creatina micronizada sabor neutro",
         "precio": "$30000",
@@ -14,6 +16,7 @@
         "categoria": "Suplementos"
     },
     {
+        "id": 3,
         "nombre": "Whey ENA Chocolate",
         "descripcion": "Proteína whey sabor chocolate",
         "precio": "$53000",
@@ -21,10 +24,51 @@
         "categoria": "Suplementos"
     },
     {
+        "id": 4,
         "nombre": "Pasta de mani Entrenuts",
         "descripcion": "Pasta de mani 100% natural sin azúcar",
         "precio": "$3700",
         "imagen": "../productos/SinTacc/pasta mani entrenuts.WebP",
         "categoria": "sintacc"
+    },
+    {
+        "id": 5,
+        "nombre": "Hummus de Garbanzo",
+        "descripcion": "Hummus de garbanzo instantaneo sin gluten",
+        "precio": "$1500",
+        "imagen": "../productos/SinTacc/hummus garbanzo.WebP",
+        "categoria": "sintacc"
+    },
+    {
+        "id": 6,
+        "nombre": "Pasta Legume",
+        "descripcion": "Pasta Legume de arvejas sin gluten ",
+        "precio": "$1200",
+        "imagen": "../productos/SinTacc/pasta legume arveja.WebP",
+        "categoria": "sintacc"
+    },
+    {
+        "id": 7,
+        "nombre": "Almendras x 100gr",
+        "descripcion": "Almendras tostadas sin sal",
+        "precio": "$3300",
+        "imagen": "../productos/Snacks/Almendras.WebP",
+        "categoria": "sueltos"
+    },
+    {
+        "id": 8,
+        "nombre": "Almohaditas x 100gr",
+        "descripcion": "Almohaditas sabor frutilla",
+        "precio": "$950",
+        "imagen": "../productos/Snacks/Almohaditas.WebP",
+        "categoria": "sueltos"
+    },
+    {
+        "id": 9,
+        "nombre": "Nuez mariposa x 100gr",
+        "descripcion": "Nuez mariposa sin sal",
+        "precio": "$2000",
+        "imagen": "../productos/Snacks/NuezMariposa.WebP",
+        "categoria": "sueltos"
     }
 ]

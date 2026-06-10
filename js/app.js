@@ -14,13 +14,37 @@ const paginas = [
 
 
 // login
-function login() {
-    window.location.href = "../index.html";
-}
+//function login() {
+  //  window.location.href = "../index.html";
+//}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("LoginForm");
+
+    if(form){
+        form.addEventListener("submit",(e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        if (email && password) {
+            sessionStorage.setItem("loggedIn", "true");
+            window.location.href = "../index.html";
+            if (!sessionStorage.getItem("loggedIn")) {
+                window.location.href = "pages/login.html";
+            }
+        }else {
+            alert("Por favor, ingresa tu correo electrónico y contraseña.");
+        }
+
+    });
+    }
+});
 
 // logout
+
 function logout() {
-    window.location.href = "login.html";
+    sessionStorage.removeItem("loggedIn");
+    window.location.href = "pages/login.html";
 }
 //navbar
 const navbar = document.getElementById("navbar");
@@ -75,10 +99,15 @@ if (productosContainer) {
 
             let categoria = "";
             if (pagina.includes("suplementos.html")) categoria = "Suplementos";
-            if (pagina.includes("snacks.html")) categoria = "Snacks";
+            if (pagina.includes("snacks.html")) categoria = "sueltos";
             if (pagina.includes("Sin_Tacc.html")) categoria = "sintacc";
+
             if (esIndex) {
-                ListaProductos = productos.slice(0, 4);
+                const suplementos = productos.filter(p => p.categoria === "Suplementos").slice(0, 2);
+                const snacks = productos.filter(p => p.categoria === "sueltos").slice(0, 2);
+                const sinTacc = productos.filter(p => p.categoria === "sintacc").slice(0, 2);
+
+                ListaProductos = [...suplementos, ...snacks, ...sinTacc];
             }
             if (categoria !== "") {
                 ListaProductos = productos.filter(p => p.categoria === categoria);
