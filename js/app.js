@@ -29,9 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (email && password) {
             sessionStorage.setItem("loggedIn", "true");
             window.location.href = "../index.html";
-            if (!sessionStorage.getItem("loggedIn")) {
-                window.location.href = "pages/login.html";
-            }
         }else {
             alert("Por favor, ingresa tu correo electrónico y contraseña.");
         }
