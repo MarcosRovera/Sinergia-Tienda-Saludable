@@ -143,15 +143,22 @@ if (productosContainer) {
                 const Btncarrito = card.querySelector(".btn-second");
                 Btncarrito.addEventListener("click", () => {
                     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+                    const productoEnCarrito = carrito.find(p => p.id === producto.id);
+                    if (productoEnCarrito) {
+                        productoEnCarrito.cantidad += cantidad;
+                    } else {
                     carrito.push({
                         id: producto.id,
                         nombre: producto.nombre,
                         precio: producto.precio,
                         cantidad: cantidad
                     });
+                    }
                     localStorage.setItem("carrito", JSON.stringify(carrito));
                     console.log(carrito);
                     alert("Producto agregado al carrito");
+                    cantidad = 1;
+                    contador.textContent = cantidad;   
                 });
 
                 
@@ -172,12 +179,16 @@ const carritoContainer = document.getElementById("carrito-container");
         carrito.forEach(producto => {
 
             const card = document.createElement("div");
-            card.className = "producto";
+            card.className = "carrito-item";
 
             card.innerHTML = `
-                <h4>${producto.nombre}</h4>
-                <p> $ ${parseInt(producto.precio).toLocaleString()}</p> 
-                <p>Cantidad: ${producto.cantidad}</p>
+                <div class="left">
+                    <h4>${producto.nombre}</h4>
+                </div>
+                <div class="middle">
+                    <p> $ ${parseInt((producto.precio * producto.cantidad)).toLocaleString()}</p>
+                    <p>Cantidad: ${producto.cantidad}</p>
+                </div>
                 <button class="btn btn-third">Eliminar</button>
             `;
 
@@ -204,3 +215,38 @@ const carritoContainer = document.getElementById("carrito-container");
             });
         }
     }
+
+const TotalCarrito = document.getElementById("totalCarrito");
+
+if (TotalCarrito) {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    let total = carrito.reduce((acc, producto) => acc + (producto.precio * producto.cantidad), 0);
+    TotalCarrito.textContent = total.toLocaleString();
+}
+const btnWhatsApp = document.getElementById("enviarPedido");
+
+if (btnWhatsApp) {
+    btnWhatsApp.addEventListener("click", () => {
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+        if (carrito.length === 0) {
+            alert("El carrito está vacío");
+            return;
+        }
+
+        let mensaje = "Hola! Quiero hacer este pedido:%0A%0A";
+
+        let total = 0;
+
+        carrito.forEach(p => {
+            const subtotal = p.precio * p.cantidad;
+            total += subtotal;
+
+            mensaje += `- ${p.nombre} x${p.cantidad} ($${subtotal.toLocaleString()})%0A`;
+        });
+        mensaje += `%0ATotal: $${total.toLocaleString()}`;
+        const telefono = "543515162384"; 
+        const url = `https://wa.me/${telefono}?text=${mensaje}`;
+        window.open(url, "_blank");
+    });
+}
