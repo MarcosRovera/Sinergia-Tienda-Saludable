@@ -4,19 +4,17 @@ const paginasHome = [
     {titulo: "Snacks", url: "pages/snacks.html"},
     {titulo: "Suplementos", url: "pages/suplementos.html"},
     {titulo: "Sin Tacc", url: "pages/Sin_Tacc.html"},
+    {titulo: "🛒", url: "pages/carrito.html"},
 ]
 const paginas = [
     {titulo: "Inicio", url: "../index.html"},
     {titulo: "Snacks", url: "snacks.html"},
     {titulo: "Suplementos", url: "suplementos.html"},
     {titulo: "Sin Tacc", url: "Sin_Tacc.html"},
+    {titulo: "🛒", url: "carrito.html"},
 ]
 
-
-// login
-//function login() {
-  //  window.location.href = "../index.html";
-//}
+//------------LOGIN--------------------
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("LoginForm");
@@ -37,13 +35,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// logout
+//------------LOGOUT--------------------
 
 function logout() {
     sessionStorage.removeItem("loggedIn");
-    window.location.href = "pages/login.html";
+    if (window.location.pathname.includes("index.html")) {
+        window.location.href = "pages/login.html";
+    } else {    
+    window.location.href = "login.html";
+    }
 }
-//navbar
+//------------------navbar---------------------
 const navbar = document.getElementById("navbar");
 
 if (navbar) {
@@ -59,11 +61,10 @@ if (navbar) {
         navLinks.appendChild(li);
     });
         
-    // Insertar antes del botón de logout
     const logoutBtn = navbar.querySelector(".btn");
     navbar.insertBefore(navLinks, logoutBtn);
 }
-//navbar home
+//------------------navbar home---------------------
 const navbarHome = document.getElementById("navbarHome");
 if (navbarHome) {
     const navLinksHome = document.createElement("ul");
@@ -79,7 +80,7 @@ if (navbarHome) {
     const logoutBtnHome = navbarHome.querySelector(".btn");
     navbarHome.insertBefore(navLinksHome, logoutBtnHome);
 }
-// productos
+//------------------productos---------------------
 const ruta = window.location.pathname.includes("/pages/")
   ? "../data/productos.json"
   : "data/productos.json";
@@ -116,13 +117,13 @@ if (productosContainer) {
                     <img src="${rutaImagen}${producto.imagen}" alt="${producto.nombre}">
                     <h4>${producto.nombre}</h4>
                     <p class="description description-second">${producto.descripcion}</p>
-                    <p>${producto.precio}</p>    
+                    <p> $ ${parseInt(producto.precio).toLocaleString()}</p>    
                     <div class="cantidad">
                         <button class="menos">-</button>
                         <span class="contador">1</span>
                         <button class="mas">+</button>
                     </div>        
-                    <button class="btn btn-second">Ver producto</button>
+                    <button class="btn btn-second">Agregar al carrito</button>
                 `;
                 let cantidad = 1;
                 const contador = card.querySelector(".contador");
@@ -138,9 +139,67 @@ if (productosContainer) {
                     }
                     contador.textContent = cantidad;
                 });
+                const Btncarrito = card.querySelector(".btn-second");
+                Btncarrito.addEventListener("click", () => {
+                    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+                    carrito.push({
+                        id: producto.id,
+                        nombre: producto.nombre,
+                        precio: producto.precio,
+                        cantidad: cantidad
+                    });
+                    localStorage.setItem("carrito", JSON.stringify(carrito));
+                    console.log(carrito);
+                    alert("Producto agregado al carrito");
+                });
+
+                
                 productosContainer.appendChild(card);
             });
         });
 }
 
 
+//------------------carrito---------------------
+const carritoContainer = document.getElementById("carrito-container");
+
+    if (carritoContainer) {
+
+        let carrito =
+            JSON.parse(localStorage.getItem("carrito")) || [];
+
+        carrito.forEach(producto => {
+
+            const card = document.createElement("div");
+            card.className = "producto";
+
+            card.innerHTML = `
+                <h4>${producto.nombre}</h4>
+                <p> $ ${parseInt(producto.precio).toLocaleString()}</p> 
+                <p>Cantidad: ${producto.cantidad}</p>
+                <button class="btn btn-third">Eliminar</button>
+            `;
+
+            const btn = card.querySelector(".btn-third");
+
+            btn.addEventListener("click", () => {
+
+                carrito = carrito.filter(p => p.id !== producto.id);
+
+                localStorage.setItem("carrito", JSON.stringify(carrito));
+
+                location.reload();
+            });
+
+            carritoContainer.appendChild(card);
+        });
+
+        const vaciar = document.getElementById("vaciarCarrito");
+
+        if (vaciar) {
+            vaciar.addEventListener("click", () => {
+                                localStorage.removeItem("carrito");
+                location.reload();
+            });
+        }
+    }

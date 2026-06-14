@@ -185,6 +185,16 @@ body.home .content {
     color: var(--brand-green);
     transition: 0.3s ease-in-out;
 }
+.btn-third {
+    background-color: transparent;
+    border: 1px solid var(--brand-green);
+    color: var(--brand-green);
+}
+.btn-third:hover {
+    background-color: var(--brand-green);
+    color: #fff;
+    transition: 0.3s ease-in-out;
+}
 .title {
     font-size: 28px;
     margin-bottom: 10px;
@@ -234,6 +244,13 @@ body.home .content {
     align-items: center;
     height: 100vh;
     background-color: #ecf0f1;
+}
+#carrito-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    align-items: start;
 }
 
 .content {
