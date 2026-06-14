@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function logout() {
     sessionStorage.removeItem("loggedIn");
+    localStorage.removeItem("carrito");
     if (window.location.pathname.includes("index.html")) {
         window.location.href = "pages/login.html";
     } else {    
