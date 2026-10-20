@@ -1,0 +1,186 @@
+[
+  {
+    "id": 1001,
+    "id_cliente": 1,
+    "fecha": "2026-08-27",
+    "total": 60000,
+    "direccion": "av. juan b justo 3000",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": 1,
+        "cantidad": 1
+      },
+      {
+        "id_producto": 2,
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": 1002,
+    "id_cliente": 2,
+    "fecha": "2026-08-28",
+    "total": 53000,
+    "direccion": "democracia 456",
+    "entregado": true,
+    "productos": [
+      {
+        "id_producto": 3,
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": 1003,
+    "id_cliente": 3,
+    "fecha": "2026-08-29",
+    "total": 9950,
+    "direccion": "belgrano 789",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": 4,
+        "cantidad": 1
+      },
+      {
+        "id_producto": 7,
+        "cantidad": 1
+      },
+      {
+        "id_producto": 8,
+        "cantidad": 1
+      },
+      {
+        "id_producto": 9,
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": 1004,
+    "id_cliente": 1,
+    "fecha": "2026-10-20",
+    "total": 3300,
+    "direccion": "Democracia 1702",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": 7,
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": 1005,
+    "id_cliente": 2,
+    "fecha": "2026-10-20",
+    "total": 950,
+    "direccion": "democracia 1700",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": 8,
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": 1006,
+    "id_cliente": 3,
+    "fecha": "2026-10-20",
+    "total": 30000,
+    "direccion": "martin garcia 86",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": 1,
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": 1007,
+    "id_cliente": 3,
+    "fecha": "2026-10-20",
+    "total": 3300,
+    "direccion": "martin garica",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": 7,
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": 1008,
+    "id_cliente": 3,
+    "fecha": "2026-10-20",
+    "total": 90000,
+    "direccion": "carafa",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": 1,
+        "cantidad": 3
+      }
+    ]
+  },
+  {
+    "id": 1009,
+    "id_cliente": 1,
+    "fecha": "2026-10-20",
+    "total": 30000,
+    "direccion": "ads",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": 1,
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": 1010,
+    "id_cliente": 2,
+    "fecha": "2026-10-20",
+    "total": 30000,
+    "direccion": "colonia anita 285",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": 1,
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": 1011,
+    "id_cliente": 2,
+    "fecha": "2026-10-20",
+    "total": 8000,
+    "direccion": "asdasda",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": 9,
+        "cantidad": 4
+      }
+    ]
+  },
+  {
+    "id": 1012,
+    "id_cliente": 1,
+    "fecha": "2026-10-20",
+    "total": 30000,
+    "direccion": "democracia 1702",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": 2,
+        "cantidad": 1
+      }
+    ]
+  }
+]

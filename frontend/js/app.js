@@ -14,36 +14,20 @@ const paginas = [
     {titulo: "🛒", url: "carrito.html"},
 ]
 
-//------------LOGIN--------------------
 
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("LoginForm");
-
-    if(form){
-        form.addEventListener("submit",(e) => {
-        e.preventDefault();
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        if (email && password) {
-            sessionStorage.setItem("loggedIn", "true");
-            window.location.href = "../index.html";
-        }else {
-            alert("Por favor, ingresa tu correo electrónico y contraseña.");
-        }
-
-    });
-    }
-});
 
 //------------LOGOUT--------------------
 
+
 function logout() {
+    sessionStorage.removeItem("cliente");
     sessionStorage.removeItem("loggedIn");
     localStorage.removeItem("carrito");
-    if (window.location.pathname.includes("index.html")) {
+
+    if (window.location.pathname.includes("/pages/")) {
+        window.location.href = "login.html";
+    } else {
         window.location.href = "pages/login.html";
-    } else {    
-    window.location.href = "login.html";
     }
 }
 //------------------navbar---------------------
@@ -82,9 +66,7 @@ if (navbarHome) {
     navbarHome.insertBefore(navLinksHome, logoutBtnHome);
 }
 //------------------productos---------------------
-const ruta = window.location.pathname.includes("/pages/")
-  ? "../data/productos.json"
-  : "data/productos.json";
+const ruta =  "http://localhost:3000/productos";
 const productosContainer = document.getElementById("contenedor-productos");
 
 if (productosContainer) {
@@ -93,18 +75,20 @@ if (productosContainer) {
         .then(productos => {
             let ListaProductos = productos;
             const esIndex = window.location.pathname.includes("index.html");
-            const rutaImagen = esIndex ? "" : "../";
+            const rutaImagen = window.location.pathname.includes("/pages/")
+            ? "../"
+            : "";
             const pagina = window.location.pathname;
 
             let categoria = "";
-            if (pagina.includes("suplementos.html")) categoria = "Suplementos";
-            if (pagina.includes("snacks.html")) categoria = "sueltos";
-            if (pagina.includes("Sin_Tacc.html")) categoria = "sintacc";
+            if (pagina.includes("suplementos.html")) categoria = "suplementos";
+            if (pagina.includes("snacks.html")) categoria = "snacks";
+            if (pagina.includes("Sin_Tacc.html")) categoria = "sin tacc";
 
             if (esIndex) {
-                const suplementos = productos.filter(p => p.categoria === "Suplementos").slice(0, 2);
-                const snacks = productos.filter(p => p.categoria === "sueltos").slice(0, 2);
-                const sinTacc = productos.filter(p => p.categoria === "sintacc").slice(0, 2);
+                const suplementos = productos.filter(p => p.categoria.toLowerCase() === "suplementos").slice(0, 2);
+                const snacks = productos.filter(p => p.categoria.toLowerCase() === "snacks").slice(0, 2);
+                const sinTacc = productos.filter(p => p.categoria.toLowerCase() === "sin tacc").slice(0, 2);
 
                 ListaProductos = [...suplementos, ...snacks, ...sinTacc];
             }
@@ -223,30 +207,127 @@ if (TotalCarrito) {
     let total = carrito.reduce((acc, producto) => acc + (producto.precio * producto.cantidad), 0);
     TotalCarrito.textContent = total.toLocaleString();
 }
+//------------------ Enviar pedido al backend y WhatsApp ------------------
+
 const btnWhatsApp = document.getElementById("enviarPedido");
 
 if (btnWhatsApp) {
-    btnWhatsApp.addEventListener("click", () => {
-        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    btnWhatsApp.addEventListener("click", async () => {
+
+        const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
         if (carrito.length === 0) {
             alert("El carrito está vacío");
             return;
         }
 
-        let mensaje = "Hola! Quiero hacer este pedido:%0A%0A";
+        // Obtener el cliente que inició sesión
+        const cliente = JSON.parse(sessionStorage.getItem("cliente"));
 
-        let total = 0;
+        if (!cliente) {
+            alert("Tenés que iniciar sesión para realizar una compra.");
 
-        carrito.forEach(p => {
-            const subtotal = p.precio * p.cantidad;
-            total += subtotal;
+            const rutaLogin = window.location.pathname.includes("/pages/")
+                ? "login.html"
+                : "pages/login.html";
 
-            mensaje += `- ${p.nombre} x${p.cantidad} ($${subtotal.toLocaleString()})%0A`;
-        });
-        mensaje += `%0ATotal: $${total.toLocaleString()}`;
-        const telefono = "543515162384"; 
-        const url = `https://wa.me/${telefono}?text=${mensaje}`;
-        window.open(url, "_blank");
+            window.location.href = rutaLogin;
+            return;
+        }
+
+        // Solicitar la dirección de entrega
+        const direccion = prompt("Ingresá la dirección de entrega:");
+
+        if (direccion === null || direccion.trim() === "") {
+            return;
+        }
+
+        // Abrir una pestaña durante el clic del usuario
+        const ventanaWhatsApp = window.open("about:blank", "_blank");
+
+        // Preparar los datos del pedido
+        const pedido = {
+            id_cliente: Number(cliente.id),
+            fecha: new Date().toISOString().slice(0, 10),
+            direccion: direccion.trim(),
+            productos: carrito.map(producto => ({
+                id_producto: Number(producto.id),
+                cantidad: Number(producto.cantidad)
+            }))
+        };
+
+        try {
+            const respuesta = await fetch("http://localhost:3000/pedidos", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(pedido)
+            });
+
+            const resultado = await respuesta.json();
+
+            // Si el backend rechaza el pedido
+            if (!respuesta.ok) {
+                alert(resultado.error || "No se pudo registrar el pedido.");
+
+                if (ventanaWhatsApp && !ventanaWhatsApp.closed) {
+                    ventanaWhatsApp.close();
+                }
+
+                return;
+            }
+
+            // Crear el mensaje para WhatsApp
+            const nombreCliente =
+                `${cliente.nombre} ${cliente.apellido || ""}`.trim();
+
+            let mensaje =
+                `¡Hola! Soy ${nombreCliente} y quiero realizar este pedido en Sinergia:\n\n`;
+
+            carrito.forEach(producto => {
+                const subtotal =
+                    Number(producto.precio) * producto.cantidad;
+
+                mensaje += `- ${producto.nombre} x${producto.cantidad}`;
+                mensaje += ` ($${subtotal.toLocaleString("es-AR")})\n`;
+            });
+
+            mensaje += `\nTotal: $${Number(resultado.pedido.total).toLocaleString("es-AR")}`;
+            mensaje += `\nNúmero de pedido: ${resultado.pedido.id}`;
+            mensaje += `\nCliente: ${nombreCliente}`;
+            mensaje += `\nDirección de entrega: ${direccion.trim()}`;
+
+            const telefono = "543515162384";
+
+            const urlWhatsApp =
+                `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+
+            // El pedido ya quedó registrado en el backend
+            localStorage.removeItem("carrito");
+
+            alert(
+                `¡Pedido registrado correctamente!\nNúmero de pedido: ${resultado.pedido.id}`
+            );
+
+            // Abrir WhatsApp
+            if (ventanaWhatsApp && !ventanaWhatsApp.closed) {
+                ventanaWhatsApp.location.href = urlWhatsApp;
+            }
+
+            // Actualizar el carrito
+            location.reload();
+
+        } catch (error) {
+            console.error("Error al registrar el pedido:", error);
+
+            if (ventanaWhatsApp && !ventanaWhatsApp.closed) {
+                ventanaWhatsApp.close();
+            }
+
+            alert(
+                "No se pudo conectar con el servidor. Verificá que el backend esté funcionando."
+            );
+        }
     });
 }
