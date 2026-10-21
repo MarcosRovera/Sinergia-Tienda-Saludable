@@ -3,7 +3,7 @@
 
 ```text
 Sinergia-Tienda-Saludable/
-├── front/
+├── frontend/
 │   ├── index.html
 │   ├── pages/
 │   ├── css/
