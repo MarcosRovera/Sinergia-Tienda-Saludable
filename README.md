@@ -27,8 +27,9 @@ El proyecto cuenta con un frontend desarrollado con HTML, CSS y JavaScript, y un
 * CORS para permitir la comunicación entre frontend y backend.
 
 ### Estructura del proyecto
-
+```text
 Sinergia-Tienda-Saludable/
+│
 ├── frontend/
 │   ├── index.html
 │   ├── pages/
@@ -37,22 +38,17 @@ Sinergia-Tienda-Saludable/
 │   ├── data/
 │   └── productos/
 │
-├── Backend/
-│   ├── data/
-│   │   ├── clientes.json
-│   │   ├── productos.json
-│   │   └── pedidos.json
-│   ├── routes/
-│   ├── models/
-│   ├── middleware/
-│   ├── scripts/
-│   ├── index.js
-│   ├── package.json
-│   ├── .env.example
-│   └── .gitignore
-│
-└── README.md
-
+└── Backend/
+    ├── routes/
+    ├── models/
+    ├── middleware/
+    ├── scripts/
+    ├── index.js
+    ├── package.json
+    ├── .env.example
+    ├── .gitignore
+    └── README.md
+```
 ### Requisitos previos
 
 Para ejecutar el proyecto se necesita:
