@@ -22,9 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const cliente = respuesta.data.cliente;
+            const token = respuesta.data.token;
 
-            // Guardar los datos del cliente para la sesión actual
+            // Guardar los datos del cliente y el JWT
             sessionStorage.setItem("cliente", JSON.stringify(cliente));
+            sessionStorage.setItem("token", token);
 
             alert(`¡Bienvenido, ${cliente.nombre}!`);
 

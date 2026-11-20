@@ -22,6 +22,7 @@ const paginas = [
 function logout() {
     sessionStorage.removeItem("cliente");
     sessionStorage.removeItem("loggedIn");
+    sessionStorage.removeItem("token");
     localStorage.removeItem("carrito");
 
     if (window.location.pathname.includes("/pages/")) {
@@ -223,8 +224,8 @@ if (btnWhatsApp) {
 
         // Obtener el cliente que inició sesión
         const cliente = JSON.parse(sessionStorage.getItem("cliente"));
-
-        if (!cliente) {
+        const token = sessionStorage.getItem("token");
+        if (!cliente || !token) {
             alert("Tenés que iniciar sesión para realizar una compra.");
 
             const rutaLogin = window.location.pathname.includes("/pages/")
@@ -234,6 +235,8 @@ if (btnWhatsApp) {
             window.location.href = rutaLogin;
             return;
         }
+
+
 
         // Solicitar la dirección de entrega
         const direccion = prompt("Ingresá la dirección de entrega:");
@@ -247,8 +250,6 @@ if (btnWhatsApp) {
 
         // Preparar los datos del pedido
         const pedido = {
-            id_cliente: Number(cliente.id),
-            fecha: new Date().toISOString().slice(0, 10),
             direccion: direccion.trim(),
             productos: carrito.map(producto => ({
                 id_producto: Number(producto.id),
@@ -260,11 +261,12 @@ if (btnWhatsApp) {
             const respuesta = await fetch("http://localhost:3000/pedidos", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(pedido)
             });
-
+            
             const resultado = await respuesta.json();
 
             // Si el backend rechaza el pedido

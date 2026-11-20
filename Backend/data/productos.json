@@ -6,7 +6,7 @@
     "precio": 30000,
     "imagen": "productos/Suplementos/creatina ENA naranja.WebP",
     "categoria": "suplementos",
-    "stock": 13,
+    "stock": 11,
     "disponible": true
   },
   {
@@ -46,7 +46,7 @@
     "precio": 1500,
     "imagen": "productos/SinTacc/hummus garbanzo.WebP",
     "categoria": "sin tacc",
-    "stock": 18,
+    "stock": 16,
     "disponible": true
   },
   {

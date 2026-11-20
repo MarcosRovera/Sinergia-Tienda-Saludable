@@ -182,5 +182,23 @@
         "cantidad": 1
       }
     ]
+  },
+  {
+    "id": 1013,
+    "id_cliente": 5,
+    "fecha": "2026-11-18",
+    "total": 31500,
+    "direccion": "Democracia 1700",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": 1,
+        "cantidad": 1
+      },
+      {
+        "id_producto": 5,
+        "cantidad": 1
+      }
+    ]
   }
 ]

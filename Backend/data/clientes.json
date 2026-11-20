@@ -30,5 +30,13 @@
     "email": "sofia.perez@gmail.com",
     "contraseña": "sofia12345",
     "telefono": 3519999999
+  },
+  {
+    "id": 5,
+    "nombre": "jesus",
+    "apellido": "pedernera",
+    "email": "jesuspedernera@gmail.com",
+    "contraseña": "River123",
+    "telefono": 3512212161
   }
 ]
